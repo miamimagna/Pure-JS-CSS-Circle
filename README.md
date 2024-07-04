@@ -2,13 +2,14 @@
 This project demonstrates how to create a rotating div element around the center of the page using HTML, CSS, and JavaScript. The rotation is achieved using geometric formulas, ensuring the effect is responsive and adjusts to different screen sizes.
 
 ## Table of Contents
-- Demo
-- Features
-- Usage
-- Code Explanation
-- Contributing
+- [Demo](https://github.com/miamimagna/Pure-JS-CSS-Circle/blob/main/README.md#demo)
+- [Features](https://github.com/miamimagna/Pure-JS-CSS-Circle/blob/main/README.md#features)
+- [Usage](https://github.com/miamimagna/Pure-JS-CSS-Circle/blob/main/README.md#usage)
+- [Code Explanation](https://github.com/miamimagna/Pure-JS-CSS-Circle/blob/main/README.md#code-explanation)
+- [Contributing](https://github.com/miamimagna/Pure-JS-CSS-Circle/blob/main/README.md#contributing)
 
-## Demo: [here](https://miamimagna.github.io/Pure-JS-CSS-Circle/)
+## Demo
+[here](https://miamimagna.github.io/Pure-JS-CSS-Circle/)
 
 ## Features
 - Pure JavaScript: No external libraries required.
