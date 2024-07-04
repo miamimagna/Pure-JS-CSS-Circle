@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>gola</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            background-color: black;
+            color: yellow;
+        }
+
+        #container {
+            background-color: rgba(235, 5, 112, 0.644);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50px;
+            position: relative;
+            top: 200px;
+            left: 400px;
+        }
+
+        #buttons {
+            position: fixed;
+            bottom: 50px;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        #start {
+            margin-left: 10%;
+        }
+
+        #end {
+            margin-right: 16%;
+        }
+
+        p {
+            font-size: 3em;
+            padding-bottom: 5px;
+        }
+
+        #start,
+        #end {
+            height: 20px;
+            padding: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: rgba(253, 41, 147, 0.616);
+            border: 2px solid white;
+            border-radius: 0.5em 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #start:hover,
+        #end:hover {
+            color: rgba(253, 41, 147, 0.616);
+            background-color: white;
+            border: 2px solid rgba(253, 41, 147, 0.616);
+            font-weight: bolder;
+        }
+
+        #dummy {
+            border: 2px solid rgba(111, 0, 255, 0.527);
+            position: absolute;
+            top: 50px;
+            left: 450px;
+            width: 400px;
+            height: 400px;
+            border-radius: 200px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2em;
+            z-index: -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #dummy2 {
+            border: 2px dashed rgba(4, 248, 216, 0.527);
+            position: absolute;
+            top: 0;
+            left: 400px;
+            width: 500px;
+            height: 500px;
+            border-radius: 250px;
+        }
+
+        #dummy3 {
+            border: 2px dashed rgba(4, 248, 216, 0.527);
+            position: absolute;
+            top: 100px;
+            left: 500px;
+            width: 300px;
+            height: 300px;
+            border-radius: 150px;
+        }
+
+        #all {
+            position: relative;
+            margin-top: 2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="all">
+        <div id="container">
+            <p id='content'>hi</p>
+        </div>
+        <div id="buttons">
+            <button id="start">start</button>
+            <button id="end">end</button>
+        </div>
+        <div id="dummy">O</div>
+        <div id="dummy2"></div>
+        <div id="dummy3"></div>
+        <script>
+            /*
+        Miamimagna
+     2024/07/04, 3:14pm
+    
+    geometry variables:
+    * rx and ry are coordinates of center, r is radius, initial_x and initial_y are initial position of div 
+    * x and y represent current position of div
+    * isLower represent whether we are in upper hemisphere of circle(true) or lower hemisphere(true)
+    * isLower will also change the text inside div from hi to bye
+    * intervalId will be used for stopping rotation using clearInterval
+    
+    actual working: 
+    we will actually continuously change position of div using top and left property that will decided by x and y property
+    now to actually traverse in a circle we know that for any circle or radius r at center C(rx, ry), we have equation:
+    (x - rx) ^ 2 + (y - ry) ^ 2 = r ^ 2
+    now if we increase/decrease x ourselves and calculate value of y from above equation, we can actually simulate circular motion
+    for that value of y would be:
+    y = ry (+ or -) sqrt(r ^ 2 - (x - rx) ^ 2)
+    + or - will decide whether it is in upper hemisphere or lower hemisphere
+    
+    another thing is that for clockwise motion, we will increase x in upper hemisphere and decrease in lower hemisphere
+    */
+            let rx = 600;
+            let ry = 200;
+            let r = 200;
+            let initial_x = rx - r;
+            let initial_y = ry;
+            let x = initial_x;
+            let y = initial_y;
+            let isLower = 0;
+            let intervalId = null;
+
+            // document elements for DOM manipulation, names are pretty straightforward here
+            const container = document.getElementById('container');
+            const para = document.getElementById('content');
+            const start = document.getElementById('start');
+            const end = document.getElementById('end');
+
+            // Rotatehelper will be periodically called to actally rotate div
+            function rotateHelper() {
+                // if upper hemisphere, x will increase, otherwise decrease
+                let h = isLower ? -1 : 1;
+                // x must increase slowly near the edges as y will increase too much for small changes in x
+                if (x > initial_x + 10 && x < 2 * r + initial_x - 10) x += h;
+                else x += h * 0.27;
+                // if the boundary of circle is surpassed, then we are either on end of upper hemisphere or on lower hemisphere
+                if (x < initial_x || x > 2 * r + initial_x)
+                    isLower = !isLower, x -= h, h = isLower ? -1 : 1, para.innerText = para.innerText === 'hi' ? 'bye' : 'hi';
+                let m = r ** 2 - (rx - x) ** 2;
+                y = ry - h * m ** 0.5;
+                tpp = y.toString() + 'px';
+                left = x.toString() + 'px';
+                container.style.top = tpp;
+                container.style.left = left;
+            }
+
+            function rotate() {
+                intervalId ??= setInterval(rotateHelper, 5);
+            }
+            function stop() {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+
+            start.addEventListener('click', rotate);
+            end.addEventListener('click', stop);
+        </script>
+    </div>
+</body>
+
+</html>
