@@ -27,6 +27,16 @@ open index.html
 ## Code Explanation
 ### Key Highlight: 
 This code is entirely written without any use of AI at all! No one can verify it but you can understand that by the structure of code.
+- The html provides three buttons that have following functionality:
+- `start`: this is to start the circular motion of the div using geometric equation of circle:
+    `x^2 + y^2 = r^2`
+- `start-smooth`: this one was to simulate same circular motion using simple trigonometric equations:
+    ```
+    x = x' + r * sin(O)
+    y = y' + r * cos(O)
+    ```
+- **Responsive Web Design**: You can run code on any screen size and it will have same funcitonality
+- **Browser compatibility**: Due to only usage of `setInterval` and `Math` library, this code can run on any browser that has javascript enabled(although flexbox support is still an issue but it will still work without it too!)
 ### HTML
 Html used here is pretty basic, we have used a `div#all` to define the actual circular path on which the `div#container` will move.
 ### CSS
